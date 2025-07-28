@@ -22,7 +22,7 @@ TextShield is a modular, AI-powered web app built with Python and Streamlit that
 ---
 # 🚀 Live Demo
 
-Check out the app here: [Click to Open in Streamlit]([https://your-app-url.streamlit.app](https://textshield-7ybu5liimhkjdwi2srzyzv.streamlit.app/))
+Check out the app here: https://textshield-7ybu5liimhkjdwi2srzyzv.streamlit.app/
 
 
 ## Screenshots
