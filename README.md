@@ -1,4 +1,4 @@
-# 🛡️ TextShield – AI-Powered Writing & Detection Suite
+# 🛡️ GPTShield – AI-Powered Writing & Detection Suite
 
  **Detect. Rewrite. Analyze. Secure.**  
  
