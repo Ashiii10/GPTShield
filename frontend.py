@@ -28,8 +28,15 @@ if not st.session_state.authenticated:
     
 @st.cache_resource
 def setup_nltk():
-    nltk.download("punkt")
-    nltk.download("stopwords")
+    try:
+        nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        nltk.download("punkt")
+
+    try:
+        nltk.data.find("corpora/stopwords")
+    except LookupError:
+        nltk.download("stopwords")
 
 setup_nltk()
 
@@ -406,4 +413,5 @@ elif selected_tool == "AI Chat Assistant":
                     st.audio(f"data:audio/mp3;base64,{b64_audio}", format="audio/mp3")
                 except Exception as e:
                     st.warning(f"🔊 TTS failed: {e}")
+
 
