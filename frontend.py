@@ -25,16 +25,16 @@ auth_flow()
 
 if not st.session_state.authenticated:
     st.stop()
-import nltk
 
 def download_nltk_resources():
     try:
         nltk.data.find("tokenizers/punkt")
     except LookupError:
-        nltk.download("punkt", quiet=True)
+        print("Downloading 'punkt'...")
+        nltk.download("punkt")  # Remove quiet=True
+        print("Downloaded 'punkt' successfully.")
 
 download_nltk_resources()
-
 # nltk.download('punkt')
 # nltk.download('stopwords')
 
@@ -407,6 +407,7 @@ elif selected_tool == "AI Chat Assistant":
                     st.audio(f"data:audio/mp3;base64,{b64_audio}", format="audio/mp3")
                 except Exception as e:
                     st.warning(f"🔊 TTS failed: {e}")
+
 
 
 
