@@ -20,6 +20,7 @@ import os
 import bcrypt
 from welcome import welcome_screen
 from auth import auth_flow
+import re
 
 auth_flow()
 
@@ -56,7 +57,9 @@ def calculate_perplexity(text):
     return torch.exp(loss).item()
 
 def calculate_burstiness(text):
-    tokens = nltk.word_tokenize(text.lower())
+    # tokens = nltk.word_tokenize(text.lower())
+ 
+    tokens = re.findall(r'\b\w+\b', text.lower())
     word_freq = FreqDist(tokens)
     repeated_count = sum(count > 1 for count in word_freq.values())
     return repeated_count / len(word_freq)
@@ -407,6 +410,7 @@ elif selected_tool == "AI Chat Assistant":
                     st.audio(f"data:audio/mp3;base64,{b64_audio}", format="audio/mp3")
                 except Exception as e:
                     st.warning(f"🔊 TTS failed: {e}")
+
 
 
 
