@@ -50,8 +50,8 @@ def calculate_perplexity(text):
     encoded_input = tokenizer.encode(text, add_special_tokens=False, return_tensors='pt')
     input_ids = encoded_input[0]
 
-    # 🛑 Truncate to max allowed input size for GPT-2 (usually 1024 tokens)
-    max_length = model.config.n_positions  # Usually 1024
+    # Truncate input to max model length (usually 1024 for GPT-2)
+    max_length = model.config.n_positions
     if input_ids.shape[0] > max_length:
         input_ids = input_ids[:max_length]
 
@@ -61,6 +61,7 @@ def calculate_perplexity(text):
 
     loss = torch.nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), input_ids.view(-1))
     return torch.exp(loss).item()
+
 
 '''
 def calculate_perplexity(text):
@@ -426,6 +427,7 @@ elif selected_tool == "AI Chat Assistant":
                     st.audio(f"data:audio/mp3;base64,{b64_audio}", format="audio/mp3")
                 except Exception as e:
                     st.warning(f"🔊 TTS failed: {e}")
+
 
 
 
