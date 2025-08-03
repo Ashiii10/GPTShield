@@ -46,7 +46,23 @@ def load_model():
     return tokenizer, model
 
 tokenizer, model = load_model()
+def calculate_perplexity(text):
+    encoded_input = tokenizer.encode(text, add_special_tokens=False, return_tensors='pt')
+    input_ids = encoded_input[0]
 
+    # 🛑 Truncate to max allowed input size for GPT-2 (usually 1024 tokens)
+    max_length = model.config.n_positions  # Usually 1024
+    if input_ids.shape[0] > max_length:
+        input_ids = input_ids[:max_length]
+
+    with torch.no_grad():
+        outputs = model(input_ids.unsqueeze(0))
+        logits = outputs.logits
+
+    loss = torch.nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), input_ids.view(-1))
+    return torch.exp(loss).item()
+
+'''
 def calculate_perplexity(text):
     encoded_input = tokenizer.encode(text, add_special_tokens=False, return_tensors='pt')
     input_ids = encoded_input[0]
@@ -54,7 +70,7 @@ def calculate_perplexity(text):
         outputs = model(input_ids.unsqueeze(0))
         logits = outputs.logits
     loss = torch.nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), input_ids.view(-1))
-    return torch.exp(loss).item()
+    return torch.exp(loss).item()'''
 
 def calculate_burstiness(text):
     # tokens = nltk.word_tokenize(text.lower())
@@ -410,6 +426,7 @@ elif selected_tool == "AI Chat Assistant":
                     st.audio(f"data:audio/mp3;base64,{b64_audio}", format="audio/mp3")
                 except Exception as e:
                     st.warning(f"🔊 TTS failed: {e}")
+
 
 
 
